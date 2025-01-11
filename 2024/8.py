@@ -1,12 +1,9 @@
 from aoc_utils import *
 
-res = 0
-
 h = len(l)
 w = len(l[0])
-
-nodesp1 = {}
-nodes = {}
+nodesp1 = set()
+nodes = set()
 ant = defaultdict(list)
 
 for y in range(h):
@@ -24,33 +21,28 @@ for v in ant.values():
 		
 		ax = x1-xd
 		ay = y1-yd
-		
 		ax2 = x2+xd
 		ay2 = y2+yd
 		
-		nodes[x1,y1] = 1
-		nodes[x2,y2] = 1
+		nodes.add((x1,y1))
+		nodes.add((x2,y2))
 		
 		added = True
 		p1Done = False
 		while added:
 			added = False
-			if 0 <= ax < w and 0 <= ay < h:
-				nodes[(ax,ay)] = 1
-				added = True
-				if not p1Done:
-					nodesp1[(ax,ay)] = 1
-			if 0 <= ax2 < w and 0 <= ay2 < h:
-				nodes[(ax2,ay2)] = 1
-				added = True
-				if not p1Done:
-					nodesp1[(ax2,ay2)] = 1
+			for xx,yy in [(ax,ay),(ax2,ay2)]:
+				if 0 <= xx < w and 0 <= yy < h:
+					nodes.add((xx,yy))
+					added = True
+					if not p1Done:
+						nodesp1.add((xx,yy))
 			p1Done = True
 				
-			ax = ax-xd
-			ax2 = ax2+xd
-			ay = ay-yd
-			ay2 = ay2+yd
+			ax-=xd
+			ay-=yd
+			ax2+=xd
+			ay2+=yd
 
 print("Part 1:",len(nodesp1))
 print("Part 2:",len(nodes))
