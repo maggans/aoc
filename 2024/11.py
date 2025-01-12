@@ -1,10 +1,7 @@
 from aoc_utils import *
 
 def solve(iterations):
-	d = defaultdict(int)
-	for it in ints(l[0]):
-		d[it]+=1
-		
+	d = Counter(ints(l[0]))
 	for i in range(iterations):
 		dd = defaultdict(int)
 		for k,v in d.items():
@@ -19,13 +16,7 @@ def solve(iterations):
 			else:
 				dd[k*2024]+=v
 		d = dd
-
-	res = 0
-	for k,v in d.items():
-		if v > 0:
-			res+=v
-	return res
-
+	return sum(d.values())
 
 print("Part 1:",solve(25))
 print("Part 2:",solve(75))
