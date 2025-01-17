@@ -1,13 +1,8 @@
 from aoc_utils import *
 
-res = 0
-
-g = getGroups(l)
-towels = g[0][0].split(", ")
-patterns = g[1]
-
+towels = set(l[0].split(", "))
 cache = {}
-def isPossible(pattern,towels):
+def isPossible(pattern):
 	if len(pattern) == 0:
 		return 1
 	
@@ -16,18 +11,16 @@ def isPossible(pattern,towels):
 	
 	matches = 0
 	for i in range(1,len(pattern)+1):
-		st = pattern[:i]
-		if st in towels:
-			matches += isPossible(pattern[i:],towels)
+		if pattern[:i] in towels:
+			matches += isPossible(pattern[i:])
 	cache[pattern] = matches
 	return matches
 
-resp1 = 0
-for it in patterns:
-	r = isPossible(it,towels)
-	res += r
-	if r > 0:
-		resp1+=1
+resp1 = resp2 = 0
+for i in range(2,len(l)):
+	r = isPossible(l[i])
+	resp1 += r > 0
+	resp2 += r
 
 print("Part 1:",resp1)
-print("Part 2:",res)
+print("Part 2:",resp2)

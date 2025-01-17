@@ -1,15 +1,7 @@
 from aoc_utils import *
 
-sx = sy = 0
-ex = ey = 0
-for i in range(len(l)):
-	l[i] = list(l[i])
-	for j in range(len(l[i])):
-		if l[i][j] == "S":
-			sx,sy = j,i
-		if l[i][j] == "E":
-			ex,ey = j,i
-
+sx,sy = find2d(l,"S")
+ex,ey = find2d(l,"E")
 q = [(0,sx,sy,0,[])]
 vis = {}
 paths = {(sx,sy)}
@@ -17,7 +9,6 @@ bestScore = None
 dirs = [(1,0),(0,1),(-1,0),(0,-1)]
 while q:
 	score,x,y,dir,path = heapq.heappop(q)
-	
 	if x == ex and y == ey:
 		if bestScore is None or score == bestScore:
 			bestScore = score

@@ -1,51 +1,34 @@
 from aoc_utils import *
 
-sx, sy = 0,0
+sx,sy = 0,0
 ex,ey = 70,70
-if useExample:
-	ex,ey=6,6
-
-g = {}
-for i,line in enumerate(l):
-	if i == 1024:
-		break
-	x,y = ints(line)
-	g[(x,y)] = "#"
-	# print(x,y)
-	
-for i in range(71):
-	for j in range(71):
-		if (j,i) not in g:
-			g[(j,i)] = "."
+bytes = set()
+for i in range(0,1024):
+	bytes.add(tuple(ints(l[i])))
 
 def bfs():
-	q = deque()
-	q.append((0,sx,sy))
-	vis = {}
+	q = deque([(0,sx,sy)])
+	vis = set()
 	while q:
-		d,nx,ny = q.popleft()
-		# print(nx,ny)
-		if nx == ex and ny == ey:
+		d,x,y = q.popleft()
+		if x == ex and y == ey:
 			return d
 		
-		if (nx,ny) in vis:
+		if (x,y) in vis:
 			continue
-		vis[(nx,ny)] = 1
+		vis.add((x,y))
 		
-		dd = [(-1,0),(1,0),(0,-1),(0,1)]
-		for dx,dy in dd:
-			cx = nx+dx
-			cy = ny+dy
-			if (cx,cy) in g and g[(cx,cy)] == ".":
+		for dx,dy in [(-1,0),(1,0),(0,-1),(0,1)]:
+			cx = x+dx
+			cy = y+dy
+			if sx <= cx <= ex and sy <= cy <= ey and (cx,cy) not in bytes:
 				q.append((d+1,cx,cy))
 	return -1
 
 print("Part 1:", bfs())
 	
 for i in range(1024,len(l)):
-	x,y = ints(l[i])
-	g[(x,y)] = "#"
-	
+	bytes.add(tuple(ints(l[i])))
 	if bfs() == -1:
-		print("Part 2:", str(x) + "," + str(y))
+		print("Part 2:", l[i])
 		break

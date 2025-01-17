@@ -1,6 +1,6 @@
 import sys
 import copy
-from itertools import combinations
+from itertools import combinations,product
 from collections import deque, defaultdict, Counter
 from string import ascii_lowercase as alc
 from functools import cmp_to_key
@@ -94,5 +94,12 @@ def binToStr(val,pad=0):
 
 def ints(somearg):
 	return [int(x) for x in re.findall('-?\d+',somearg)]
+
+def find2d(grid2d, ele):
+	for i in range(len(grid2d)):
+		for j in range(len(grid2d[i])):
+			if grid2d[i][j] == ele:
+				return (j,i)
+	return None
 
 		

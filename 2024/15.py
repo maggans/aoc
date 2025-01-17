@@ -3,15 +3,13 @@ from aoc_utils import *
 g = getGroups(l)
 gridP1 = [list(x) for x in g[0]]
 gridP2 = [[] for _ in gridP1]
-sx = sy = 0
+sx,sy = find2d(gridP1,"@")
 move = "".join(g[1])
 for i,it in enumerate(gridP1):
 	for j,c in enumerate(it):
 		gridP2[i] += [c,c]
 		if c == "O":
 			gridP2[i] = gridP2[i][:-2] + ["[","]"]
-		elif c == "@":
-			sx,sy = j,i
 			
 def moveVert(grid,x,y,dy,prevy,part2):	
 	if grid[y][x] == "]" and part2:
