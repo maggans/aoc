@@ -5,8 +5,7 @@ for i in range(len(l)):
 	for j in range(len(l[i])):
 		gard[(j,i)] = l[i][j]
 
-p1 = 0
-p2 = 0
+resp1 = resp2 = 0
 vis = set()
 for k,v in gard.items():
 	if k in vis:
@@ -20,7 +19,7 @@ for k,v in gard.items():
 			continue
 		vis.add((x,y))
 		group.add((x,y))
-		for dx,dy in [(-1,0),(1,0),(0,-1),(0,1)]:
+		for dx,dy in DIRS:
 			cx = x+dx
 			cy = y+dy
 			if (cx,cy) in gard and gard[(cx,cy)] == v:
@@ -31,7 +30,7 @@ for k,v in gard.items():
 	fence = set()	
 	for x,y in group:
 		perimeter += 4
-		for dx,dy,dir in [(-1,0,"w"),(1,0,"e"),(0,-1,"s"),(0,1,"n")]:
+		for dir,(dx,dy) in enumerate(DIRS):
 			cx = x+dx
 			cy = y+dy
 			if (cx,cy) in group:
@@ -45,8 +44,8 @@ for k,v in gard.items():
 		if (x,y,dir) in fvis:
 			continue
 		sides+=1
-		dx = dir in "ns" 
-		dy = dir in "ew"
+		dx = dir is NORTH or dir is SOUTH 
+		dy = dir is WEST or dir is EAST
 		for sign in [1,-1]:
 			cx = x+sign*dx
 			cy = y+sign*dy
@@ -55,8 +54,8 @@ for k,v in gard.items():
 				cx+=sign*dx
 				cy+=sign*dy
 	
-	p1+=area*perimeter
-	p2+=area*sides
+	resp1+=area*perimeter
+	resp2+=area*sides
 
-print("Part 1:",p1)
-print("Part 2:",p2)
+print("Part 1:",resp1)
+print("Part 2:",resp2)

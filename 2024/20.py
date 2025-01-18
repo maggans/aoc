@@ -12,7 +12,7 @@ while q:
 		shortest = dist
 		break
 
-	for dx,dy in [(1,0),(-1,0),(0,-1),(0,1)]:
+	for dx,dy in DIRS:
 		cx = x+dx
 		cy = y+dy
 		if l[cy][cx] != "#" and (cx,cy) != prev:
@@ -23,17 +23,16 @@ def solve(secs):
 	cond = shortest - 100
 	for (x,y),dist in dists.items():
 		distFromStart = shortest - dist
-		for i in range(0,secs+1):
-			for j in range(0,secs+1):
-				mh = i + j
-				if mh == 0 or mh > secs:
-					continue
-				
-				for dx,dy in [(-i,-j),(-i,j),(i,-j),(i,j)]:
-					cx = x+dx
-					cy = y+dy
-					if (cx,cy) in dists and dists[(cx,cy)] + mh + distFromStart <= cond:
-						cheats.add((x,y,cx,cy))
+		for i,j in product(range(0,secs+1),repeat=2):
+			mh = i + j
+			if mh == 0 or mh > secs:
+				continue
+			
+			for dx,dy in [(-i,-j),(-i,j),(i,-j),(i,j)]:
+				cx = x+dx
+				cy = y+dy
+				if (cx,cy) in dists and dists[(cx,cy)] + mh + distFromStart <= cond:
+					cheats.add((x,y,cx,cy))
 	return len(cheats)
 
 print("Part 1:",solve(2))

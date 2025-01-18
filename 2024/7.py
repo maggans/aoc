@@ -10,13 +10,12 @@ def testeq(val,left,match,p2 = False):
 		return True
 	return False
 
-res = 0
-res2 = 0
+resp1 = resp2 = 0
 for line in l:
 	v = ints(line)
 	if testeq(v[1],v[2:],v[0]):
-		res+=v[0]
+		resp1+=v[0]
 	elif testeq(v[1],v[2:],v[0],True):
-		res2+=v[0]
-print("Part 1:",res)
-print("Part 2:",res2+res)
+		resp2+=v[0]
+print("Part 1:",resp1)
+print("Part 2:",resp1+resp2)

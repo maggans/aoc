@@ -9,10 +9,8 @@ def solve(iterations):
 			if k == 0:
 				dd[1]+=v
 			elif len(its) % 2 == 0:
-				left = its[:len(its)//2]
-				right = its[len(its)//2:]
-				dd[int(left)]+=v
-				dd[int(right)]+=v
+				dd[int(its[:len(its)//2])]+=v
+				dd[int(its[len(its)//2:])]+=v
 			else:
 				dd[k*2024]+=v
 		d = dd

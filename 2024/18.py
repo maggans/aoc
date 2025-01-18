@@ -18,7 +18,7 @@ def bfs():
 			continue
 		vis.add((x,y))
 		
-		for dx,dy in [(-1,0),(1,0),(0,-1),(0,1)]:
+		for dx,dy in DIRS:
 			cx = x+dx
 			cy = y+dy
 			if sx <= cx <= ex and sy <= cy <= ey and (cx,cy) not in bytes:

@@ -10,6 +10,7 @@ import re
 import math
 import time
 import json
+import operator
 
 l = []
 def readInput(useEx):
@@ -102,4 +103,37 @@ def find2d(grid2d, ele):
 				return (j,i)
 	return None
 
-		
+EAST = 0
+SOUTH = 1
+WEST = 2
+NORTH = 3
+DIRS = [(1,0),(0,1),(-1,0),(0,-1)]
+
+def turnRight(dir):
+	return (dir+1) % 4
+
+def turnLeft(dir):
+	return (dir+3) % 4
+	
+def turnBack(dir):
+	return (dir+2) % 4
+
+def arrowToDir(arrow):
+	if arrow == ">":
+		return EAST
+	if arrow == "<":
+		return WEST
+	if arrow == "v":
+		return SOUTH
+	if arrow == "^":
+		return NORTH
+
+def dirToArrow(dir):
+	if dir == EAST:
+		return ">"
+	if dir == WEST:
+		return "<"
+	if dir == SOUTH:
+		return "v"
+	if dir == NORTH:
+		return "^"

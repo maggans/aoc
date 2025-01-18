@@ -12,7 +12,7 @@ for i,it in enumerate(gridP1):
 			gridP2[i] = gridP2[i][:-2] + ["[","]"]
 			
 def moveVert(grid,x,y,dy,prevy,part2):	
-	if grid[y][x] == "]" and part2:
+	if grid[y][x] == "]":
 		x -= 1
 	boxes = [(x,y)]
 	toMove = []
@@ -22,7 +22,7 @@ def moveVert(grid,x,y,dy,prevy,part2):
 		boxes_tmp = []
 		y+=dy
 		for tx,_ in boxes:
-			if grid[y][tx] == "#" or (grid[y][tx+1] == "#" and part2):
+			if grid[y][tx] == "#" or (part2 and grid[y][tx+1] == "#"):
 				return prevy
 			
 			for i in [-1,0,1] if part2 else [0]:
@@ -40,9 +40,8 @@ def moveVert(grid,x,y,dy,prevy,part2):
 
 def solve(grid,sx,sy,boxSize,p2):
 	x,y = sx,sy
-	dirs = {"<":(-1,0),">":(1,0),"v":(0,1),"^":(0,-1)}
-	for dir in move:
-		dx,dy = dirs[dir]
+	for arrow in move:
+		dx,dy = DIRS[arrowToDir(arrow)]
 		nx = x + dx
 		ny = y + dy
 		
@@ -53,7 +52,7 @@ def solve(grid,sx,sy,boxSize,p2):
 			x,y = nx,ny
 			continue
 
-		if dir in "<>":
+		if arrow in "<>":
 			tx = nx+boxSize*dx
 			while grid[y][tx] in "O[]":
 				tx += boxSize*dx

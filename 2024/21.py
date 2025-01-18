@@ -2,8 +2,8 @@ from aoc_utils import *
 
 g1 = {(0,0):"7",(1,0):"8",(2,0):"9",
       (0,1):"4",(1,1):"5",(2,1):"6",
-			(0,2):"1",(1,2):"2",(2,2):"3",
-			          (1,3):"0",(2,3):"A"}
+      (0,2):"1",(1,2):"2",(2,2):"3",
+                (1,3):"0",(2,3):"A"}
 g2 = {(0,1):"<",(1,1):"v",(2,1):">",(1,0):"^",(2,0):"A"}
 grids = [g1,g2]
 paths = [defaultdict(set),defaultdict(set)]
@@ -18,9 +18,9 @@ for i in range(len(grids)):
 			if (x,y) == (x2,y2):
 				paths[i][(from_key,to_key)].add(path+"A")
 				continue
-			for dx,dy,dir in [(1,0,">"),(-1,0,"<"),(0,-1,"^"),(0,1,"v")]:
+			for dir,(dx,dy) in enumerate(DIRS):
 				if (x+dx,y+dy) in grids[i]:
-					q.append((x+dx,y+dy,path+dir))
+					q.append((x+dx,y+dy,path+dirToArrow(dir)))
 
 cache = {}
 def solve(code,start,level,maxlevel):

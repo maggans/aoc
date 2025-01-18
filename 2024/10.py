@@ -24,7 +24,7 @@ def solve(p1=False):
 				ans+=1
 				continue
 
-			for dx,dy in [(-1,0),(1,0),(0,-1),(0,1)]:
+			for dx,dy in DIRS:
 				cx = x+dx
 				cy = y+dy
 				if (cx,cy) in g and g[(cx,cy)] == d+1:

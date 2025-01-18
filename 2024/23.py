@@ -6,35 +6,22 @@ for line in l:
 	g[a].append(b)
 	g[b].append(a)	
 
-ag = {}
-ag1 = set()
-for k,v in g.items():
-	allcons = set()
-	allcons.add(k)
-	for it in v:
-		for it2 in v:
-			if it in g[it2]:
-				if k[0] == "t" or it[0] == "t" or it2[0] == "t":
-					ag1.add(frozenset({k,it,it2}))
-				allcons.add(it)
-	ag[k] = allcons
-			
-finalz = {}
-for k,v in ag.items():
-	alls = True
-	v3 = copy.deepcopy(v)
-	for it in v:
-		for it2 in v:
-			if it != it2 and it2 not in g[it] and it in v3:
-				v3.remove(it)
-	finalz[k] = v3
-			
-maxl = 0
-maxindex = ""
-for k,v in finalz.items():
-	if len(v) > maxl:
-		maxl = len(v)
-		maxindex = k
+t_computer_sets = set()
+most_computers = []
+for comp,neighbors in g.items():
+	all_mutual_neighbors = {comp}
+	for n1,n2 in combinations(neighbors,2):
+		if n1 in g[n2]:
+			if any(c.startswith("t") for c in [comp,n1,n2]):
+				t_computer_sets.add(frozenset({comp,n1,n2}))
+			all_mutual_neighbors |= {n1,n2}
 
-print("Part 1:",len(ag1))
-print("Part 2:",",".join(sorted(list(finalz[maxindex]))))
+	for n1,n2 in combinations(all_mutual_neighbors,2):
+		if n1 not in g[n2] and n1 in all_mutual_neighbors:
+			all_mutual_neighbors.remove(n1)
+
+	if len(all_mutual_neighbors) > len(most_computers):
+		most_computers = list(all_mutual_neighbors)
+
+print("Part 1:",len(t_computer_sets))
+print("Part 2:",",".join(sorted(most_computers)))

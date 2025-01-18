@@ -1,21 +1,16 @@
 from aoc_utils import *
 
-res = 0
-
-sx = sy = 0
+sx,sy = find2d(l,"^")
 g = {}
 for i in range(len(l)):
 	for j in range(len(l[0])):
 		g[(j,i)] = l[i][j]
-		if l[i][j] == "^":
-			sx,sy = j,i
-dirs = {"n":(0,-1,"e"),"s":(0,1,"w"),"w":(-1,0,"n"),"e":(1,0,"s")}
-			
+
 def testloop(vis = None):
-	dir = "n"
+	dir = NORTH
 	vis2 = set()
 	cx,cy = sx,sy
-	dx,dy,nd = dirs[dir]
+	dx,dy = DIRS[dir]
 	while True:
 		if vis != None:
 			vis.add((cx,cy))
@@ -25,8 +20,8 @@ def testloop(vis = None):
 		if (cx+dx,cy+dy) not in g:
 			return 0
 		if g[(cx+dx,cy+dy)] == "#":
-			dir = nd
-			dx,dy,nd = dirs[dir]
+			dir = turnRight(dir)
+			dx,dy = DIRS[dir]
 		else:
 			cx+=dx
 			cy+=dy
@@ -35,8 +30,9 @@ path = set()
 testloop(path)
 print("Part 1:",len(path))
 
+resp2 = 0
 for it in path:
 	g[it] = "#"
-	res+=testloop()
+	resp2 += testloop()
 	g[it] = "."
-print("Part 2:",res)
+print("Part 2:",resp2)

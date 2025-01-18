@@ -4,13 +4,9 @@ g = getGroups(l)
 rules = {tuple(ints(x)) for x in g[0]}
 pages = [ints(x) for x in g[1]]
 
-res1 = 0
-res = 0
-for it in pages:
-	it2 = sorted(it, key=cmp_to_key(lambda page1, page2: 1 if (page2,page1) in rules else -1))
-	if it2 == it:
-		res1+=it[len(it)//2]
-	else:
-		res+=it2[len(it2)//2]
-print("Part 1:", res1)
-print("Part 2:", res)
+res = [0,0]
+for p in pages:
+	ps = sorted(p, key=cmp_to_key(lambda p1, p2: 1 if (p2,p1) in rules else -1))
+	res[ps != p] += ps[len(ps)//2]
+print("Part 1:", res[0])
+print("Part 2:", res[1])

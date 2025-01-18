@@ -14,16 +14,15 @@ for i in range(len(l[0])):
 		free.append((ind,val))
 	ind+=val
 
-res = 0
+resp1 = resp2 = 0
 for i,it in enumerate(disk):
 	if it == ".":
 		it = disk.pop()
 		while disk[-1] == ".":
 			disk.pop()
-	res += i*it
-print("Part 1:", res)
+	resp1 += i*it
+print("Part 1:", resp1)
 
-res = 0			
 for i in range(len(disk2)-1,-1,-1):
 	ind,size = disk2[i]
 	for j in range(len(free)):
@@ -35,6 +34,6 @@ for i in range(len(disk2)-1,-1,-1):
 			free[j] = (f_ind + size, f_size - size)
 			break
 	for j in range(size):
-		res += (disk2[i][0]+j)*i
-print("Part 2:",res)
+		resp2 += (disk2[i][0]+j)*i
+print("Part 2:",resp2)
 	
